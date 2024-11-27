@@ -11,30 +11,14 @@ const Main = () => {
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
       <Text style={styles.headerText}>The most powerful Kanban application!</Text>
-      <FlatList
-        data={boards}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Board board={item} />}
-      />
+      <TouchableHighlight
+            style={styles.button}
+            onPress={() => { navigate('Boards') }}>
+            <Text style={styles.buttonText}>Your boards</Text>
+        </TouchableHighlight>
     </View>
   );
 };
 
 export default Main;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
-  },
-  headerText: {
-    textAlign: 'center',
-    marginVertical: 10,
-    fontSize: 18,
-  },
-});

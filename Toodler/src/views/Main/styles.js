@@ -1,13 +1,20 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  logo: {
-    width: 300, // Adjust width as needed
-    height: 300, // Adjust height as needed
-    padding: 0,
-    margin: 0,
-    resizeMode: 'contain', // Ensures the aspect ratio is maintained
-  },
-});
+    container: {
+      flex: 1,
+      padding: 10,
+    },
+    logo: {
+      width: 100,
+      height: 100,
+      alignSelf: 'center',
+    },
+    headerText: {
+      textAlign: 'center',
+      marginVertical: 10,
+      fontSize: 18,
+    },
+  });
 
 export default styles;
