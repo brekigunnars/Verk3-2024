@@ -12,7 +12,7 @@ const Main = ({ navigation: { navigate } }) => (
       <Text style={styles.paragraph}>The most powerful Kanban application!</Text>
       <TouchableHighlight
             style={styles.button}
-            onPress={() => { navigate('Boards') }}>
+            onPress={() => { navigate('Home') }}>
             <Text style={styles.buttonText}>Your boards</Text>
       </TouchableHighlight>
     </View>
