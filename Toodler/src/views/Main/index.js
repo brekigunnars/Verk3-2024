@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet, FlatList } from 'react-native';
 import logo from '../../resources/logo.png';
-import Board from '../../components/Boards/Boards';
-import data from '../../resources/data.json';
 import styles from './styles';
 
 
