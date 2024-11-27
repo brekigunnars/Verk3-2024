@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,11 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import data from '../../resources/data.json';
+import { BoardsContext } from '../../context/BoardsContext';
 import styles from './styles';
 
-
 const Home = ({ navigation }) => {
-  const [boards, setBoards] = useState(data.boards);
+  const { boards, setBoards } = useContext(BoardsContext);
 
   // Handle edit action
   const handleEdit = (board) => {
@@ -92,7 +91,13 @@ const Home = ({ navigation }) => {
         )
       }
     >
-      <Image source={{ uri: item.thumbnailPhoto }} style={styles.thumbnail} />
+      {item.thumbnailPhoto ? (
+        <Image source={{ uri: item.thumbnailPhoto }} style={styles.thumbnail} />
+      ) : (
+        <View style={styles.placeholder}>
+          <Text>No Image</Text>
+        </View>
+      )}
       <Text style={styles.boardName}>{item.name}</Text>
     </TouchableOpacity>
   );
