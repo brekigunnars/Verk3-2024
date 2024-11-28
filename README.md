@@ -49,7 +49,7 @@ This project is the first of three assignments for the **T-488-MAPP (Mobile Appl
    ```
    Or, if using Expo:
    ```bash
-   expo start
+   npx expo start
    ```
 
 ---
