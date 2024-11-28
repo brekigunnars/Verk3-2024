@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import { 
   View, 
   Text, 
@@ -9,12 +9,18 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { TasksContext } from '../../context/TasksContext';
+import { ListsContext } from '../../context/ListsContext';
+import SelectListModal from '../../components/Lists/SelectListModal'; // Adjust the path accordingly
 
 const Tasks = ({ route }) => {
   const navigation = useNavigation();
   const { listId, listName } = route.params; // Retrieve listId and listName
   
-  const { tasks, deleteTask, editTask } = useContext(TasksContext); // Use deleteTask and editTask from context
+  const { tasks, deleteTask, editTask } = useContext(TasksContext); // Destructure editTask
+  const { lists } = useContext(ListsContext); // Access lists
+  
+  const [modalVisible, setModalVisible] = useState(false);
+  const [taskToMove, setTaskToMove] = useState(null);
 
   // Filter tasks based on listId
   const filteredTasks = tasks.filter((task) => task.listId === listId);
@@ -59,11 +65,29 @@ const Tasks = ({ route }) => {
 
   const toggleTaskCompletion = (task) => {
     const updatedTask = { ...task, isFinished: !task.isFinished };
-    editTask(updatedTask);
+    console.log('Toggling Task Completion:', updatedTask);
+    editTask(updatedTask); // Use editTask from context
     Alert.alert(
       'Success',
       `Task marked as ${updatedTask.isFinished ? 'Finished' : 'Incomplete'}!`
     );
+  }
+
+  const handleMove = (task) => {
+    setTaskToMove(task);
+    setModalVisible(true);
+  }
+
+  const handleSelectList = (targetList) => {
+    if (!taskToMove) return;
+    const updatedTask = { ...taskToMove, listId: targetList.id };
+    console.log('Moving Task:', updatedTask);
+    editTask(updatedTask);
+    Alert.alert(
+      'Success',
+      `Task moved to "${targetList.name}" successfully!`
+    );
+    setTaskToMove(null);
   }
 
   // Render a single task
@@ -86,6 +110,10 @@ const Tasks = ({ route }) => {
             {
               text: item.isFinished ? "Mark as Incomplete" : "Mark as Finished",
               onPress: () => toggleTaskCompletion(item),
+            },
+            {
+              text: "Move to Another List",
+              onPress: () => handleMove(item),
             },
             {
               text: "Delete",
@@ -122,6 +150,12 @@ const Tasks = ({ route }) => {
       ) : (
         <Text style={styles.noTasksText}>No tasks available for this list.</Text>
       )}
+      <SelectListModal 
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSelect={handleSelectList}
+        excludeListId={listId}
+      />
     </View>
   );
 };
