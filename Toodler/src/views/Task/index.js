@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useLayoutEffect } from 'react';
 import { 
   View, 
   Text, 
   FlatList, 
-  StyleSheet, 
   TouchableOpacity, 
   Alert 
 } from 'react-native';
@@ -22,6 +21,19 @@ const Tasks = ({ route }) => {
 
   // Filter tasks based on listId
   const filteredTasks = tasks.filter((task) => task.listId === listId);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('CreateTask', { listId })} // Navigate to CreateList
+          style={{ marginRight: 15 }}
+        >
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const handleEdit = (task) => {
     setEditingTask(task);
