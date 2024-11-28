@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centers children horizontally
     },
     logo: {
-        width: '100%', // Adjust percentage as needed for responsiveness
-        height: '100%', // Maintain the aspect ratio
+        width: '40%', // Adjust percentage as needed for responsiveness
+        height: '40%', // Maintain the aspect ratio
         aspectRatio: 1, // Ensure a square aspect ratio
         alignSelf: 'center',
         resizeMode: 'contain', // Scale the image without distortion
@@ -45,10 +45,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white'
     },
-    logo: {
-        width: 200,
-        height: 200
-    }
   });
 
 export default styles;

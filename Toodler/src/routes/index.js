@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../views/Main';
 import Home from '../views/Home';
 import CreateBoard from '../views/CreateBoard';
+import EditBoard from '../views/EditBoards';
 import { Touchable, TouchableOpacity, Text } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -24,6 +25,7 @@ const Routes = () => (
                     </TouchableOpacity>
                 ),
             })} />
+            <Stack.Screen name="EditBoard" component={EditBoard} options={{ title: 'Edit Board' }}/>
             <Stack.Screen name="CreateBoard" component={CreateBoard} options={{ title: 'Create New Board'}}/>
         </Stack.Navigator>
     </NavigationContainer>
