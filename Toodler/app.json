@@ -4,11 +4,9 @@
     "slug": "Toodler",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/batman.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,12 +15,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/batman.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/batman.png"
     }
   }
 }

@@ -72,7 +72,10 @@ const Home = ({ navigation }) => {
   const renderBoard = ({ item }) => (
     <TouchableOpacity
       style={styles.boardContainer}
-      onPress={() => navigation.navigate('BoardDetails', { boardId: item.id })}
+      onPress={() => navigation.navigate('Board', {
+        boardId: item.id, // Pass the boardId
+        boardName: item.name, // Optional: For setting the title
+      })}
       onLongPress={() =>
         Alert.alert(
           "Board Actions",
