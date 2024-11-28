@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import TaskItem from '../Tasks/Tasks';
 import data from '../../resources/data.json';
+import styles from './styles';
 
 const getTasksForList = (listId) => {
     return data.tasks.filter((task) => task.listId === listId);
@@ -27,7 +28,7 @@ export default List;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#000000',
         padding: 10,
         marginBottom: 10,
         borderRadius: 5,

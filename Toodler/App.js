@@ -1,11 +1,16 @@
 import React from 'react';
-import Routes from './src/routes';
+import { ListsProvider } from './src/context/ListsContext';
 import { BoardsProvider } from './src/context/BoardsContext';
+import Routes from './src/routes';
 
-export default function App() {
+const App = () => {
   return (
     <BoardsProvider>
-      <Routes />
+      <ListsProvider>
+        <Routes />
+      </ListsProvider>
     </BoardsProvider>
   );
-}
+};
+
+export default App;

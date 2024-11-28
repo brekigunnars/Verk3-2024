@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
-import { darkerBlue, graniteGray } from '../../styles/colors';
+import { graniteGray } from '../../styles/colors';
 const styles = StyleSheet.create({
     container: {
     flex: 1,
     padding: 10,
-    justifyContent: 'center', // Centers children vertically
-    alignItems: 'center', // Centers children horizontally
+    justifyContent: 'center', 
+    alignItems: 'center', 
     },
     logo: {
-        width: '100%', // Adjust percentage as needed for responsiveness
-        height: '100%', // Maintain the aspect ratio
-        aspectRatio: 1, // Ensure a square aspect ratio
+        width: '40%',
+        height: '40%', 
+        aspectRatio: 1,
         alignSelf: 'center',
-        resizeMode: 'contain', // Scale the image without distortion
+        resizeMode: 'contain', 
         display: 'flex'
     },  
     headerText: {
@@ -40,15 +40,11 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         borderColor: 'white',
         borderWidth: 2,
-        backgroundColor: graniteGray
+        backgroundColor: 'black'
     },
     buttonText: {
         color: 'white'
     },
-    logo: {
-        width: 200,
-        height: 200
-    }
   });
 
 export default styles;
