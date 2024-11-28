@@ -17,7 +17,7 @@ const CreateList = ({ route, navigation }) => {
     }
 
     const newList = {
-      id: lists.length > 0 ? lists[lists.length - 1].id + 1 : 1, // Generate a unique ID
+      id: Date.now(), // Generate a unique ID
       name: listName,
       color: color,
       boardId: boardId, // Associate with the correct board
