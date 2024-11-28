@@ -7,6 +7,7 @@ import Board from '../views/Board';
 import CreateBoard from '../views/CreateBoard';
 import EditBoard from '../views/EditBoards';
 import CreateList from '../views/CreateList';
+import EditList from '../views/EditList';
 import Tasks from '../views/Task';
 import { Touchable, TouchableOpacity, Text } from 'react-native';
 
@@ -29,6 +30,8 @@ const Routes = () => (
                 ),
             })} />
             <Stack.Screen name="EditBoard" component={EditBoard} options={{ title: 'Edit Board' }}/>
+            <Stack.Screen name="EditList" component={EditList} options={{ title: 'Edit List' }}/>
+
             <Stack.Screen name="CreateBoard" component={CreateBoard} options={{ title: 'Create New Board'}}/>
             <Stack.Screen name="Board" component={Board} options={({ route }) => ({title: route.params?.boardName || 'Board' })}/>
             <Stack.Screen

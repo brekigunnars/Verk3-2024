@@ -1,46 +1,27 @@
 import React, { createContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import data from '../resources/data.json';
+import { Alert } from 'react-native';
 
+// Create the context
 export const ListsContext = createContext();
 
+// Context provider component
 export const ListsProvider = ({ children }) => {
   const [lists, setLists] = useState([]);
 
-  // Load lists from AsyncStorage on component mount
   useEffect(() => {
-    const loadLists = async () => {
+    // Load initial data from data.json or hardcoded data
+    const loadData = async () => {
       try {
-        const storedLists = await AsyncStorage.getItem('lists');
-        if (storedLists !== null) {
-          console.log('Lists loaded from AsyncStorage:', storedLists);
-          setLists(JSON.parse(storedLists));
-        } else {
-          console.log('No lists in AsyncStorage, initializing with data.json');
-          setLists(data.lists);
-        }
+        const data = require('../resources/data.json'); // Adjust path as needed
+        setLists(data.lists); // Initialize lists from data.json
       } catch (error) {
-        console.error('Error loading lists from AsyncStorage:', error);
-        setLists(data.lists); // Initialize with data.json if an error occurs
+        console.error('Error loading lists:', error);
+        Alert.alert('Error', 'Failed to load initial data.');
       }
     };
 
-    loadLists();
+    loadData();
   }, []);
-
-  // Save lists to AsyncStorage whenever they change
-  useEffect(() => {
-    const saveLists = async () => {
-      try {
-        await AsyncStorage.setItem('lists', JSON.stringify(lists));
-        console.log('Lists saved to AsyncStorage:', lists);
-      } catch (error) {
-        console.error('Error saving lists to AsyncStorage:', error);
-      }
-    };
-
-    saveLists();
-  }, [lists]);
 
   // Function to add a new list
   const addList = (newList) => {
@@ -48,7 +29,7 @@ export const ListsProvider = ({ children }) => {
   };
 
   return (
-    <ListsContext.Provider value={{ lists, addList }}>
+    <ListsContext.Provider value={{ lists, setLists, addList }}>
       {children}
     </ListsContext.Provider>
   );

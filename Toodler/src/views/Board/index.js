@@ -1,13 +1,14 @@
 import React, { useContext, useLayoutEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { ListsContext } from '../../context/ListsContext';
 import styles from './styles';
 
 const Board = ({ route, navigation }) => {
-  const { boardId } = route.params; // Board ID
-  const { lists } = useContext(ListsContext); // Get lists from context
+  const { boardId } = route.params; // Get the board ID passed via navigation
+  const { lists, setLists } = useContext(ListsContext); // Access lists and setLists from context
 
-  const boardLists = lists.filter((list) => list.boardId === boardId); // Filter lists by boardId
+  // Filter lists for the current board
+  const boardLists = lists.filter((list) => list.boardId === boardId);
 
   // Add the "+" button to the top-right corner of the screen
   useLayoutEffect(() => {
@@ -23,15 +24,52 @@ const Board = ({ route, navigation }) => {
     });
   }, [navigation]);
 
+  // Handle deleting a list
+  const handleDelete = (list) => {
+    Alert.alert(
+      "Delete List",
+      `Are you sure you want to delete "${list.name}"? All associated tasks will be removed.`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            setLists((prevLists) =>
+              prevLists.filter((l) => l.id !== list.id)
+            );
+          },
+        },
+      ]
+    );
+  };
+
   // Render a single list
   const renderList = ({ item }) => (
     <TouchableOpacity
       style={styles.listContainer}
       onPress={() =>
-        navigation.navigate('Tasks', { listId: item.id, listName: item.name })
+        navigation.navigate('Tasks', { listId: item.id, listName: item.name }) // Navigate to Tasks
+      }
+      onLongPress={() =>
+        Alert.alert(
+          "List Actions",
+          `What would you like to do with "${item.name}"?`,
+          [
+            { text: "Cancel", style: "cancel" },
+            {
+              text: "Edit",
+              onPress: () =>
+                navigation.navigate('EditList', {
+                  list: item, // Pass the list to EditList
+                }),
+            },
+            { text: "Delete", style: "destructive", onPress: () => handleDelete(item) },
+          ]
+        )
       }
     >
-      <Text style={[styles.listName, { color: item.color }]}>{item.name}</Text>
+      <Text style={styles.listName}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -39,7 +77,7 @@ const Board = ({ route, navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Lists</Text>
       <FlatList
-        data={boardLists}
+        data={boardLists} // Only lists for the current board
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderList}
       />
@@ -48,4 +86,3 @@ const Board = ({ route, navigation }) => {
 };
 
 export default Board;
-
