@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginTop: 20,
     },
+    addButtonText: {
+      fontSize: 30,
+      color: 'black', // Simple black "+" sign with no background
+      fontWeight: 'bold',
+    },
   });
-
-  export default styles;
+export default styles;

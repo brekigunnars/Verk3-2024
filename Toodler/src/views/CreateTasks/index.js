@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from './styles';
 import { TasksContext } from '../../context/TasksContext';
 
@@ -7,7 +7,7 @@ const CreateTask = ({ route, navigation }) => {
   const { listId } = route.params;
   const { addTask } = useContext(TasksContext);
   const [taskName, setTaskName] = useState('');
-  const [color, setColor] = useState('#ffffff');
+  const [taskDescription, setTaskDescription] = useState('');
 
   const handleCreateTask = () => {
     if (!taskName.trim()) {
@@ -17,11 +17,10 @@ const CreateTask = ({ route, navigation }) => {
 
     const newTask = {
       id: Date.now(),
-      name: taskName,
-      color: color,
+      name: taskName.trim(),
       listId: listId,
-      description: '', // Add a description field if needed
-      isFinished: false, // Initialize the task status
+      description: taskDescription.trim(), // Use taskDescription state
+      isFinished: false,
     };
 
     addTask(newTask);
@@ -39,12 +38,14 @@ const CreateTask = ({ route, navigation }) => {
         onChangeText={setTaskName}
       />
 
-      <Text style={styles.label}>Color</Text>
+      <Text style={styles.label}>Description</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter color (e.g., #ff0000)"
-        value={color}
-        onChangeText={setColor}
+        placeholder="Enter description"
+        value={taskDescription}
+        onChangeText={setTaskDescription}
+        multiline
+        numberOfLines={4}
       />
 
       <TouchableOpacity onPress={handleCreateTask} style={styles.createButton}>

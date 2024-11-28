@@ -7,11 +7,10 @@ import styles from './styles';
 const Main = ({ navigation: { navigate } }) => (
     <View style={styles.container}>
       <Image source={logo} style={styles.logo} />
-      <Text style={styles.paragraph}>The most powerful Kanban application!</Text>
       <TouchableHighlight
             style={styles.button}
             onPress={() => { navigate('Home') }}>
-            <Text style={styles.buttonText}>Your boards</Text>
+            <Text style={styles.buttonText}>Click here to go your boards!</Text>
       </TouchableHighlight>
     </View>
   );
