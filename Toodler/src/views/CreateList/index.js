@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker'; // Import Picker
 import { ListsContext } from '../../context/ListsContext';
 import styles from './styles';
 
@@ -8,6 +9,16 @@ const CreateList = ({ route, navigation }) => {
   const { addList } = useContext(ListsContext); // Get the addList function from context
   const [listName, setListName] = useState('');
   const [color, setColor] = useState('#ffffff'); // Default color
+
+  // Predefined color options
+  const colorOptions = [
+    { label: 'White', value: '#ffffff' },
+    { label: 'Red', value: '#ff0000' },
+    { label: 'Blue', value: '#0000ff' },
+    { label: 'Green', value: '#00ff00' },
+    { label: 'Yellow', value: '#ffff00' },
+    { label: 'Purple', value: '#800080' },
+  ];
 
   // Handle form submission
   const handleCreateList = () => {
@@ -38,13 +49,17 @@ const CreateList = ({ route, navigation }) => {
         onChangeText={setListName}
       />
 
-      <Text style={styles.label}>Color</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter color (e.g., #ff0000)"
-        value={color}
-        onChangeText={setColor}
-      />
+      <Text style={styles.label}>Select Color</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={color}
+          onValueChange={(value) => setColor(value)}
+        >
+          {colorOptions.map((option) => (
+            <Picker.Item key={option.value} label={option.label} value={option.value} />
+          ))}
+        </Picker>
+      </View>
 
       <TouchableOpacity onPress={handleCreateList} style={styles.createButton}>
         <Text style={styles.createButtonText}>Create List</Text>
@@ -54,4 +69,3 @@ const CreateList = ({ route, navigation }) => {
 };
 
 export default CreateList;
-

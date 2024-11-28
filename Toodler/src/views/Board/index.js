@@ -44,10 +44,9 @@ const Board = ({ route, navigation }) => {
     );
   };
 
-  // Render a single list
   const renderList = ({ item }) => (
     <TouchableOpacity
-      style={styles.listContainer}
+      style={[styles.listContainer, { backgroundColor: item.color }]} // Apply the color as the background
       onPress={() =>
         navigation.navigate('Tasks', { listId: item.id, listName: item.name }) // Navigate to Tasks
       }
@@ -72,6 +71,7 @@ const Board = ({ route, navigation }) => {
       <Text style={styles.listName}>{item.name}</Text>
     </TouchableOpacity>
   );
+  
 
   return (
     <View style={styles.container}>
