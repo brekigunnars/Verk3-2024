@@ -1,4 +1,4 @@
-import React, { useContext, useState, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -6,18 +6,15 @@ import {
   TouchableOpacity, 
   Alert 
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // If you're using hooks
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { TasksContext } from '../../context/TasksContext';
-
 
 const Tasks = ({ route }) => {
   const navigation = useNavigation();
   const { listId, listName } = route.params; // Retrieve listId and listName
   
-  const { tasks, setTasks } = useContext(TasksContext);
-  const [editingTask, setEditingTask] = useState(null);
-  const [editedName, setEditedName] = useState('');
+  const { tasks, deleteTask } = useContext(TasksContext); // Use deleteTask from context
 
   // Filter tasks based on listId
   const filteredTasks = tasks.filter((task) => task.listId === listId);
@@ -26,32 +23,17 @@ const Tasks = ({ route }) => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => navigation.navigate('CreateTask', { listId })} // Navigate to CreateList
+          onPress={() => navigation.navigate('CreateTask', { listId })} // Navigate to CreateTask
           style={{ marginRight: 15 }}
         >
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [navigation, listId]);
 
   const handleEdit = (task) => {
-    setEditingTask(task);
-    setEditedName(task.name);
-  }
-
-  const handleSaveChanges = () => {
-    const updatedTask = {
-      ...editingTask,
-      name: editedName,
-    };
-
-    const updatedTasks = tasks.map((t) =>
-    t.id === editingTask.id ? updatedTask : t
-  );
-
-  setTasks(updatedTasks);
-  setEditingTask(null);
+    navigation.navigate('EditTask', { taskId: task.id });
   };
 
   const handleDelete = (task) => {
@@ -67,9 +49,8 @@ const Tasks = ({ route }) => {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            setTasks((prevTasks) =>
-              prevTasks.filter((t) => t.id !== task.id)
-            );
+            deleteTask(task.id);
+            Alert.alert('Success', 'Task deleted successfully!');
           },
         },
       ]
@@ -77,7 +58,7 @@ const Tasks = ({ route }) => {
   }
 
   // Render a single task
-   const renderTask = ({ item }) => (
+  const renderTask = ({ item }) => (
     <TouchableOpacity
       style={styles.taskContainer}
       onLongPress={() =>
@@ -110,12 +91,11 @@ const Tasks = ({ route }) => {
       </Text>
     </TouchableOpacity>
   );
-    
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{listName} Tasks</Text>
-      {tasks.length > 0 ? (
+      {filteredTasks.length > 0 ? ( // Use filteredTasks.length
         <FlatList
           data={filteredTasks}
           keyExtractor={(item) => item.id.toString()}
@@ -129,4 +109,3 @@ const Tasks = ({ route }) => {
 };
 
 export default Tasks;
-

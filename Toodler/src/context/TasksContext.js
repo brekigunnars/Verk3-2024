@@ -1,15 +1,16 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import data from '../resources/data.json';
-import { View } from 'react-native';
-import CreateTask from '../views/CreateTasks';
+import { Alert } from 'react-native';
 
+// Create the context
 export const TasksContext = createContext();
 
+// Context provider component
 export const TasksProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
 
-  // Load tasks from AsyncStorage on component mount
+  // Load tasks from AsyncStorage or data.json on component mount
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -22,7 +23,8 @@ export const TasksProvider = ({ children }) => {
           setTasks(data.tasks);
         }
       } catch (error) {
-        console.log('Error loading tasks from AsyncStorage:', error);
+        console.error('Error loading tasks from AsyncStorage:', error);
+        Alert.alert('Error', 'Failed to load tasks.');
         setTasks(data.tasks);
       }
     };
@@ -37,25 +39,34 @@ export const TasksProvider = ({ children }) => {
         await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
         console.log('Tasks saved to AsyncStorage:', tasks);
       } catch (error) {
-        console.log('Error saving tasks to AsyncStorage:', error);
+        console.error('Error saving tasks to AsyncStorage:', error);
+        Alert.alert('Error', 'Failed to save tasks.');
       }
     };
 
-    if (tasks.length > 0) {
-      saveTasks();
-    }
+    saveTasks();
   }, [tasks]);
 
-  // Add this function
+  // Function to add a new task
   const addTask = (newTask) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
+  // Function to delete a task
+  const deleteTask = (taskId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  };
+
+  // Function to edit a task
+  const editTask = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
+  };
+
   return (
-        <TasksContext.Provider value={{ tasks, setTasks, addTask }}>
-            {children}
-        </TasksContext.Provider>
+    <TasksContext.Provider value={{ tasks, addTask, deleteTask, editTask }}>
+      {children}
+    </TasksContext.Provider>
   );
 };
-
-export default CreateTask;
