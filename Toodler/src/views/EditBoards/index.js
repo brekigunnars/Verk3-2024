@@ -25,24 +25,26 @@ const EditBoard = ({ route, navigation }) => {
         navigation.goBack();
     };
 
-    const pickImage = async () => {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-            alert('Sorry, we need media library permission to make this work!');
-            return;
-        }
+const pickImage = async () => {
+  const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  console.log("Permission Result:", permissionResult);
 
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+  if (!permissionResult.granted) {
+    Alert.alert("Permission Denied", "You need to enable permission to access photos.");
+    return;
+  }
 
-        if (!result.canceled) {
-            setImageUri(result.assets[0].uri);
-        }
-    };
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    quality: 1,
+  });
+
+  console.log("Image Picker Result:", result);
+
+  if (!result.canceled) {
+    setImage(result.assets[0].uri);
+  }
+};
 
     return (
         <View style={styles.container}>

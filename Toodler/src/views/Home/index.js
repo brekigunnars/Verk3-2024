@@ -119,7 +119,7 @@ const Home = ({ navigation }) => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaType.Images, // Updated per deprecation
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Updated per deprecation
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
