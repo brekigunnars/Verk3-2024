@@ -11,7 +11,7 @@ const CreateBoard = ({ navigation }) => {
 
   const handleCreateBoard = () => {
     const newBoard = {
-      id: boards.length > 0 ? boards[boards.length - 1].id + 1 : 1,
+      id: Date.now(),
       name: boardName,
       thumbnailPhoto: imageUri,
     };
