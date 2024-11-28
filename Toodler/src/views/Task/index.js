@@ -14,7 +14,7 @@ const Tasks = ({ route }) => {
   const navigation = useNavigation();
   const { listId, listName } = route.params; // Retrieve listId and listName
   
-  const { tasks, deleteTask } = useContext(TasksContext); // Use deleteTask from context
+  const { tasks, deleteTask, editTask } = useContext(TasksContext); // Use deleteTask and editTask from context
 
   // Filter tasks based on listId
   const filteredTasks = tasks.filter((task) => task.listId === listId);
@@ -57,6 +57,15 @@ const Tasks = ({ route }) => {
     );
   }
 
+  const toggleTaskCompletion = (task) => {
+    const updatedTask = { ...task, isFinished: !task.isFinished };
+    editTask(updatedTask);
+    Alert.alert(
+      'Success',
+      `Task marked as ${updatedTask.isFinished ? 'Finished' : 'Incomplete'}!`
+    );
+  }
+
   // Render a single task
   const renderTask = ({ item }) => (
     <TouchableOpacity
@@ -75,6 +84,10 @@ const Tasks = ({ route }) => {
               onPress: () => handleEdit(item),
             },
             {
+              text: item.isFinished ? "Mark as Incomplete" : "Mark as Finished",
+              onPress: () => toggleTaskCompletion(item),
+            },
+            {
               text: "Delete",
               style: "destructive",
               onPress: () => handleDelete(item),
@@ -84,7 +97,12 @@ const Tasks = ({ route }) => {
         )
       }
     >
-      <Text style={styles.taskName}>{item.name}</Text>
+      <Text style={[
+        styles.taskName, 
+        item.isFinished && styles.taskNameFinished
+      ]}>
+        {item.name}
+      </Text>
       <Text style={styles.taskDescription}>{item.description}</Text>
       <Text style={styles.taskStatus}>
         Status: {item.isFinished ? 'Finished' : 'Not Finished'}
