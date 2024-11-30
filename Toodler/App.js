@@ -1,18 +1,21 @@
 import React from 'react';
-import { TasksProvider } from './src/context/TasksContext';
-import { ListsProvider } from './src/context/ListsContext';
+import { ThemeProvider } from './src/context/ThemeContext'; // Import ThemeProvider
 import { BoardsProvider } from './src/context/BoardsContext';
+import { ListsProvider } from './src/context/ListsContext';
+import { TasksProvider } from './src/context/TasksContext';
 import Routes from './src/routes';
 
 const App = () => {
   return (
-    <BoardsProvider>
-      <ListsProvider>
-        <TasksProvider>
-          <Routes />
-        </TasksProvider>
-      </ListsProvider>
-    </BoardsProvider>
+    <ThemeProvider>
+      <BoardsProvider>
+        <ListsProvider>
+          <TasksProvider>
+            <Routes />
+          </TasksProvider>
+        </ListsProvider>
+      </BoardsProvider>
+    </ThemeProvider>
   );
 };
 
