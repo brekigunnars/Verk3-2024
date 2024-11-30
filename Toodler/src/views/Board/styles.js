@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     addButtonText: {
       fontSize: 30,
-      color: 'black', // Simple black "+" sign with no background
+      color: 'black', 
       fontWeight: 'bold',
     },
   });

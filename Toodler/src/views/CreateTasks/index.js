@@ -19,7 +19,7 @@ const CreateTask = ({ route, navigation }) => {
       id: Date.now(),
       name: taskName.trim(),
       listId: listId,
-      description: taskDescription.trim(), // Use taskDescription state
+      description: taskDescription.trim(), 
       isFinished: false,
     };
 

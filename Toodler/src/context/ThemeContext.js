@@ -19,7 +19,7 @@ export const ThemeProvider = ({ children }) => {
         background: '#FFFFFF',
         text: '#000000',
         buttonBackground: '#000000', 
-        buttonText: '#FFFFFF', // White text on purple buttons
+        buttonText: '#FFFFFF', 
       };
 
   return (

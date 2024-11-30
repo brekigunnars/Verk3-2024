@@ -9,19 +9,25 @@ This project is the first of three assignments for the **T-488-MAPP (Mobile Appl
 
 1. **Boards Management**
    - Create, edit, and delete boards.
+   - To edit or delete longpress the board.
    - Associate multiple lists with each board.
 
 2. **Lists Management**
    - Create, edit, and delete lists within a board.
+   - To edit or delete longpress the list.
    - Select colors for lists using a dropdown.
 
 3. **Tasks Management**
    - View tasks associated with specific lists.
+   - To edit, delete, move or mark as finished/unfinished, longpress the task.
    - Create, edit, and delete tasks within a board.
    - Mark taks as finished or not finished
 
 4. **Dynamic Navigation**
    - Navigate between boards, lists, and tasks using React Navigation.
+
+5. **Dark Theme**
+    - Dark theme only works on the home screen with the toggle dark theme button
 
 
 ---
